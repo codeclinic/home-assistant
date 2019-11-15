@@ -3,10 +3,11 @@
   "name": "Nello",
   "documentation": "https://www.home-assistant.io/integrations/nello",
   "requirements": [
-    "pynello==2.0.2"
+    "pynello==2.0.3"
   ],
   "dependencies": [],
   "codeowners": [
-    "@pschmitt"
+    "@pschmitt",
+    "@codeclinic"
   ]
 }
