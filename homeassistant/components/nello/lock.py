@@ -6,7 +6,7 @@ import voluptuous as vol
 
 import homeassistant.helpers.config_validation as cv
 from homeassistant.components.lock import LockDevice, PLATFORM_SCHEMA
-from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
+from homeassistant.const import CONF_PASSWORD, CONF_USERNAME, CONF_WEBHOOK, CONF_CLIENTID
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -15,15 +15,15 @@ ATTR_LOCATION_ID = "location_id"
 EVENT_DOOR_BELL = "nello_bell_ring"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
-    {vol.Required(CONF_USERNAME): cv.string, vol.Required(CONF_PASSWORD): cv.string}
+    {vol.Required(CONF_CLIENTID): cv.string, vol.Required(CONF_USERNAME): cv.string, vol.Required(CONF_PASSWORD): cv.string, vol.Required(CONF_WEBHOOK): cv.string}
 )
 
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the Nello lock platform."""
-    from pynello.private import Nello
+    from pynello.public import Nello
 
-    nello = Nello(config.get(CONF_USERNAME), config.get(CONF_PASSWORD))
+    nello = Nello(config.get(CONF_CLIENTID), config.get(CONF_USERNAME), config.get(CONF_PASSWORD))
     add_entities([NelloLock(lock) for lock in nello.locations], True)
 
 
